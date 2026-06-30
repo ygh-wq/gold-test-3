@@ -38,9 +38,10 @@ EMAIL_CONFIG = {
     "sender_name": "黄金智能监控",
     "smtp_server": "smtp.qq.com",
     "smtp_port": 587,
-    "smtp_password": "qzxlkppageyehddf",
-}
-
+     "smtp_password": os.environ.get("SMTP_PASSWORD", ""),
+ "receiver_emails": [
+        "1137206138@qq.com", 
+         "648148661@qq.com", 
 # ── 提醒阈值 ──
 DAILY_ALERT_PCT = 1.5   # 日波动超 ±1.5% 即时提醒
 WEEKLY_ALERT_PCT = 3.0  # 周波动超 ±3% 即时提醒

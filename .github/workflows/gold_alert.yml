@@ -1,0 +1,31 @@
+name: Gold Price Alert
+
+on:
+  schedule:
+    # 每15分钟运行一次 (北京时间 8:00-23:00 覆盖主要交易时段)
+    - cron: "*/15 0-15 * * *"
+  workflow_dispatch:
+    inputs:
+      force_send:
+        description: "强制发送报告"
+        type: boolean
+        default: false
+
+jobs:
+  check-gold-price:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run gold monitor
+        env:
+          FORCE_SEND: ${{ github.event.inputs.force_send == 'true' && 'true' || 'false' }}
+        run: python gold_monitor.py
